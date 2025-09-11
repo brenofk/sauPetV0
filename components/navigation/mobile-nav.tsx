@@ -43,8 +43,8 @@ export function MobileNav() {
   ]
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50">
-      <div className="flex items-center justify-around py-2 px-4">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50 mobile-nav-safe">
+      <div className="flex items-center justify-around py-2 px-2 sm:px-4">
         {navItems.map((item) => (
           <Button
             key={item.href}
@@ -52,14 +52,14 @@ export function MobileNav() {
             size="sm"
             onClick={() => router.push(item.href)}
             className={cn(
-              "flex flex-col items-center space-y-1 h-auto py-2 px-3 rounded-xl",
+              "flex flex-col items-center space-y-1 h-auto py-3 px-2 sm:px-3 rounded-xl min-h-[60px] flex-1 max-w-[80px]",
               item.active
                 ? "bg-primary/10 text-primary"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
             )}
           >
-            <item.icon className="w-5 h-5" />
-            <span className="text-xs font-medium">{item.label}</span>
+            <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+            <span className="text-xs font-medium leading-tight text-center">{item.label}</span>
           </Button>
         ))}
       </div>
