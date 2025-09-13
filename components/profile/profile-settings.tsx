@@ -49,18 +49,49 @@ export function ProfileSettings({ user }: ProfileSettingsProps) {
 
   const fetchProfile = async () => {
     try {
-      const { data, error } = await supabase.from("profiles").select("*").eq("id", user.id).single()
+      const { data, error } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle() // Use maybeSingle() instead of single() to handle no results gracefully
 
-      if (error) throw error
+      if (error) {
+        console.error("Database error:", error)
+        throw error
+      }
 
-      setProfile(data)
-      setFormData({
-        full_name: data.full_name || "",
-        phone: data.phone || "",
-        email: user.email || "",
-      })
+      if (!data) {
+        // Create profile if it doesn't exist
+        const { data: newProfile, error: createError } = await supabase
+          .from("profiles")
+          .insert({
+            id: user.id,
+            full_name: user.user_metadata?.full_name || "",
+            cpf: user.user_metadata?.cpf || "",
+            email_confirmed: user.email_confirmed_at ? true : false,
+            phone_confirmed: false,
+          })
+          .select()
+          .single()
+
+        if (createError) {
+          console.error("Error creating profile:", createError)
+          throw createError
+        }
+
+        setProfile(newProfile)
+        setFormData({
+          full_name: newProfile.full_name || "",
+          phone: newProfile.phone || "",
+          email: user.email || "",
+        })
+      } else {
+        setProfile(data)
+        setFormData({
+          full_name: data.full_name || "",
+          phone: data.phone || "",
+          email: user.email || "",
+        })
+      }
     } catch (error) {
       console.error("Erro ao carregar perfil:", error)
+      setError("Erro ao carregar perfil. Tente novamente.")
     } finally {
       setIsLoadingProfile(false)
     }
@@ -336,9 +367,14 @@ export function ProfileSettings({ user }: ProfileSettingsProps) {
                 Esta ação irá excluir permanentemente sua conta e todos os dados associados (pets, vacinas,
                 notificações). Esta ação não pode ser desfeita.
               </p>
-              <Button variant="destructive" onClick={deleteAccount} disabled={isLoading} className="rounded-xl">
-                <Trash2 className="w-4 h-4 mr-2" />
-                Excluir Conta Permanentemente
+              <Button
+                variant="destructive"
+                onClick={deleteAccount}
+                disabled={isLoading}
+                className="w-full sm:w-auto rounded-xl text-sm px-4 py-2 min-h-[44px] touch-manipulation"
+              >
+                <Trash2 className="w-4 h-4 mr-2 flex-shrink-0" />
+                <span className="text-center">Excluir Conta Permanentemente</span>
               </Button>
             </div>
           </div>

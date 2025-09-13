@@ -28,31 +28,33 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
 
   return (
     <header className="bg-card border-b border-border sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <Heart className="w-6 h-6 text-primary-foreground" />
+          <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+              <Heart className="w-4 h-4 sm:w-6 sm:h-6 text-primary-foreground" />
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">SauPet</h1>
-              <p className="text-sm text-muted-foreground">Olá, {user.user_metadata?.full_name || "Tutor"}!</p>
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-xl font-bold text-foreground truncate">SauPet</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                Olá, {user.user_metadata?.full_name || "Tutor"}!
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-destructive rounded-full text-xs"></span>
+          <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+            <Button variant="ghost" size="icon" className="relative h-9 w-9 sm:h-10 sm:w-10 touch-manipulation">
+              <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-destructive rounded-full text-xs"></span>
             </Button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <UserIcon className="w-5 h-5" />
+                <Button variant="ghost" size="icon" className="h-9 w-9 sm:h-10 sm:w-10 touch-manipulation">
+                  <UserIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-44 sm:w-48">
                 <DropdownMenuItem onClick={() => router.push("/profile")}>
                   <UserIcon className="w-4 h-4 mr-2" />
                   Meu Perfil

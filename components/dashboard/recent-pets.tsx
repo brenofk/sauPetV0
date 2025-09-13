@@ -71,44 +71,53 @@ export function RecentPets() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+      <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0 pb-3 sm:pb-4">
         <CardTitle className="flex items-center space-x-2">
-          <Heart className="w-5 h-5 text-primary" />
-          <span>Pets Recentes</span>
+          <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+          <span className="text-base sm:text-lg">Pets Recentes</span>
         </CardTitle>
-        <Button variant="ghost" size="sm" onClick={() => router.push("/pets")} className="text-primary">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => router.push("/pets")}
+          className="text-primary self-start sm:self-auto"
+        >
           Ver todos
-          <ArrowRight className="w-4 h-4 ml-1" />
+          <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-1" />
         </Button>
       </CardHeader>
       <CardContent>
         {pets.length === 0 ? (
-          <div className="text-center py-6">
-            <Heart className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground mb-3">Nenhum pet cadastrado ainda</p>
-            <Button size="sm" onClick={() => router.push("/pets")} className="rounded-xl">
+          <div className="text-center py-4 sm:py-6">
+            <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-2 sm:mb-3" />
+            <p className="text-sm sm:text-base text-muted-foreground mb-2 sm:mb-3">Nenhum pet cadastrado ainda</p>
+            <Button
+              size="sm"
+              onClick={() => router.push("/pets")}
+              className="rounded-xl min-h-[44px] touch-manipulation"
+            >
               <Plus className="w-4 h-4 mr-2" />
               Adicionar Pet
             </Button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {pets.map((pet) => (
               <div
                 key={pet.id}
-                className="flex items-center space-x-3 p-3 border border-border rounded-xl hover:bg-muted/50 transition-colors cursor-pointer"
+                className="flex items-center space-x-3 p-2.5 sm:p-3 border border-border rounded-lg sm:rounded-xl hover:bg-muted/50 transition-colors cursor-pointer min-h-[60px] touch-manipulation"
                 onClick={() => router.push("/pets")}
               >
-                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-primary" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-foreground">{pet.name}</h3>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium text-foreground text-sm sm:text-base truncate">{pet.name}</h3>
                   <div className="flex items-center space-x-2">
-                    <Badge variant="secondary" className="text-xs">
+                    <Badge variant="secondary" className="text-xs flex-shrink-0">
                       {pet.species === "cachorro" ? "🐕 Cachorro" : "🐱 Gato"}
                     </Badge>
-                    {pet.breed && <span className="text-xs text-muted-foreground">{pet.breed}</span>}
+                    {pet.breed && <span className="text-xs text-muted-foreground truncate">{pet.breed}</span>}
                   </div>
                 </div>
               </div>

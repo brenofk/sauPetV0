@@ -160,8 +160,21 @@
   /* Extra small mobile devices */
   @media (max-width: 375px) {
     .container {
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    /* Adicionou breakpoint xs para telas muito pequenas */
+    .xs\:grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .xs\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .xs\:gap-2 {
+      gap: 0.5rem;
     }
   }
 }
